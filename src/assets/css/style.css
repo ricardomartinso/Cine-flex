@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+* {
+  box-sizing: border-box;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  font-family: "Roboto", sans-serif;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  z-index: 1;
+
+  width: 100%;
+  height: 65px;
+  background-color: #c3cfd9;
+  border-bottom: 1px solid #ccc;
+}
+header h1 {
+  font-size: 34px;
+  color: #e8833a;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  margin-top: calc(65px + 25px);
+}
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #dfe6ed;
+  border-top: 1px solid #ccc;
+  width: 100%;
+  height: 117px;
+  position: fixed;
+  bottom: 0;
+}
+.footer-img {
+  background-color: #fff;
+  width: 64px;
+  height: 89px;
+  margin-left: 15px;
+}
+.footer-img img {
+  width: 100%;
+  padding: 10%;
+}
+.session-info {
+  margin-left: 10px;
+  font-size: 26px;
+}
+.pick {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+.movies {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  max-width: 320px;
+  margin: 25px 0;
+}
+.movie-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 145px;
+  height: 209px;
+  background-color: #fff;
+
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.35s ease-out 50ms;
+}
+.movie-box img {
+  width: 100%;
+  padding: 5%;
+}
+.movie-box:hover {
+  box-shadow: 0 0 8px rgba(255, 145, 0, 0.733);
+  transform: translate(0, -5px);
+}
+.schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100vw;
+  height: 100%;
+  margin-bottom: 117px;
+}
+.schedule-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 20px;
+  padding-left: 8%;
+}
+.schedule h3 {
+  margin: 40px 0 25px 0;
+}
+.schedule-buttons {
+  display: flex;
+}
+.time-button {
+  color: #fff;
+  background-color: #e8833a;
+  border: none;
+  margin-right: 20px;
+  font-size: 18px;
+  padding: 10px 14px;
+}
+.invisivel {
+  display: none;
+}
