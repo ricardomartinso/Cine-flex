@@ -25,9 +25,9 @@ export default function Movies() {
 }
 function MovieBox({ url, id }) {
   return (
-    <Link to={`/session/${id}`}>
+    <Link to={`/movie/${id}`}>
       <div className="movie-box">
-        <img src={url} alt="sentiu" />
+        <img src={url} alt="a" />
       </div>
     </Link>
   );

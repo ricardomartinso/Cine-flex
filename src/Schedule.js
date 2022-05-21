@@ -1,57 +1,63 @@
 import React from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import imagem from "./assets/img/imagem-teste.png";
 
 export default function Schedule() {
   const [days, setDays] = React.useState([]);
-  const [showtimes, setShowtimes] = React.useState([]);
+  const [footer, setFooter] = React.useState({});
+  const params = useParams();
 
   React.useEffect(() => {
     const promise = axios.get(
-      "https://mock-api.driven.com.br/api/v5/cineflex/movies/1/showtimes"
+      `https://mock-api.driven.com.br/api/v5/cineflex/movies/${params.movieId}/showtimes`
     );
     promise.then((requisicao) => {
       const days = requisicao.data.days.map((days) => days);
+      const footer = { ...requisicao.data };
       setDays([...days]);
-      setShowtimes(days.map((s) => s.showtimes));
+      setFooter(footer);
     });
   }, []);
 
   return (
     <div className="schedule">
-      {console.log(showtimes)}
       <h2 className="pick">Selecione o horário</h2>
-      {days.map((object, index) => (
+      {days.map((day) => (
         <ScheduleBox
-          weekday={object.weekday}
-          date={object.date}
-          times={object.showtimes.map((n) => n.name)}
-          key={index}
+          key={day.id}
+          weekday={day.weekday}
+          date={day.date}
+          showtimes={day.showtimes}
         />
       ))}
 
       <footer>
         <div className="footer-img">
-          <img src={imagem} alt="" />
+          <img src={footer.posterURL} alt="" />
         </div>
         <div className="session-info">
-          <div className="footer-movie-name">Enola HOMES</div>
-          <div className="footer-movie-session">Quinta feira - 16:00</div>
+          <div className="footer-movie-name">{footer.title}</div>
         </div>
       </footer>
     </div>
   );
 }
-function ScheduleBox({ weekday, date, times }) {
+function ScheduleBox({ weekday, date, showtimes }) {
   return (
     <div className="schedule-box">
       <h3>
         {weekday} - {date}
       </h3>
       <div className="schedule-buttons">
-        <button className="time-button">{times[0]}</button>
-        <button className="time-button">{times[1]}</button>
+        {showtimes.map((showtime) => (
+          <Link to={`/session/${showtime.id}`}>
+            <button className="time-button" id={showtime.id}>
+              {showtime.name}
+            </button>
+          </Link>
+        ))}
       </div>
     </div>
   );
