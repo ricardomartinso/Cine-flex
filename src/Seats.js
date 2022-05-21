@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import imagem from "./assets/img/imagem-teste.png";
+
 import {
   SeatsContentStyle,
   SeatsStyle,
@@ -19,6 +19,7 @@ export default function Seats() {
   const [seatsArray, setSeatsArray] = useState([]);
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const promise = axios.get(
@@ -44,20 +45,33 @@ export default function Seats() {
     }
   }
 
+  function checkCpf(string) {
+    const regex = /^[0-9]{11}$/;
+    return regex.test(string);
+  }
+
   function buySeat(event) {
     event.preventDefault();
-    const buyerInfo = {
-      name,
-      cpf,
-      ids: seatsArray,
-    };
 
-    const promise = axios.post(
-      "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
-      buyerInfo
-    );
+    if (checkCpf(cpf)) {
+      const buyerInfo = {
+        name,
+        cpf,
+        ids: seatsArray,
+      };
+      const promise = axios.post(
+        "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
+        buyerInfo
+      );
 
-    promise.then((res) => res.data);
+      promise.then(() => {
+        navigate("/sucesso", { replace: true });
+      });
+    } else {
+      alert(
+        "CPF Inválido por favor digite novamente sem os pontos ou traços, somente utilize números"
+      );
+    }
   }
   return (
     <SeatsContentStyle>
@@ -112,10 +126,10 @@ export default function Seats() {
               onChange={(e) => setCpf(e.target.value)}
               placeholder="Digite o seu cpf..."
               minLength={11}
-              maxLength={11}
               required
             />
           </div>
+
           <button>Comprar Assentos</button>
         </form>
       </SeatsStyle>
