@@ -182,6 +182,10 @@ form button {
   font-size: 13px;
   color: #4e5a65;
 }
+.green {
+  color: #247a6b;
+  font-weight: 700;
+}
 .invisivel {
   display: none;
 }

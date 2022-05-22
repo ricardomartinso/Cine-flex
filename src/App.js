@@ -2,6 +2,7 @@ import React from "react";
 import Movies from "./Movies";
 import Schedule from "./Schedule";
 import Seats from "./Seats";
+import Success from "./Success";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="/" element={<Movies />} />
             <Route path="/movie/:movieId" element={<Schedule />} />
             <Route path="/session/:seatId" element={<Seats />} />
+            <Route path="/sucesso" element={<Success />} />
           </Routes>
         </div>
       </div>

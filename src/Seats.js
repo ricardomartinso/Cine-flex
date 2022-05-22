@@ -17,8 +17,10 @@ export default function Seats() {
   const [time, setTime] = useState("");
   const [day, setDay] = useState("");
   const [seatsArray, setSeatsArray] = useState([]);
+  const [seatsName, setSeatsName] = useState([]);
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
+  const [success, setSuccess] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +34,9 @@ export default function Seats() {
       setSeats(seatsTest);
       setFooterMovie(footerMovie);
       setTime(request.data.name);
-      setDay(request.data.day.weekday);
+      setDay(request.data.day);
+
+      setSuccess();
     });
   }, []);
 
@@ -41,6 +45,16 @@ export default function Seats() {
     if (seatsArray.includes(id)) {
       const newArray = seatsNewArray.filter((seatId) => seatId !== id);
       setSeatsArray(newArray);
+      return;
+    }
+  }
+  function removeRepeatedIdName(number) {
+    const seatsNewArray = [...seatsName];
+    if (seatsName.includes(number)) {
+      const newArray = seatsNewArray.filter(
+        (seatIdName) => seatIdName !== number
+      );
+      setSeatsName(newArray);
       return;
     }
   }
@@ -65,7 +79,15 @@ export default function Seats() {
       );
 
       promise.then(() => {
-        navigate("/sucesso", { replace: true });
+        const success = {
+          movieTitle: footerMovie.title,
+          movieTime: time,
+          movieDate: day.date,
+          seats: seatsName,
+          buyerName: name,
+          buyerCpf: cpf,
+        };
+        navigate("/sucesso", { state: success }, { replace: true });
       });
     } else {
       alert(
@@ -85,7 +107,10 @@ export default function Seats() {
             id={seat.id}
             seatsArray={seatsArray}
             setSeatsArray={setSeatsArray}
+            seatsName={seatsName}
+            setSeatsName={setSeatsName}
             removeRepeatedId={removeRepeatedId}
+            removeRepeatedIdName={removeRepeatedIdName}
           ></Seat>
         ))}
         <div className="seats-legends">
@@ -141,7 +166,7 @@ export default function Seats() {
         <div className="session-info">
           <div className="footer-movie-name">{footerMovie.title}</div>
           <div className="footer-movie-session">
-            {day} - {time}
+            {day.weekday} - {time}
           </div>
         </div>
       </footer>
@@ -156,6 +181,9 @@ function Seat({
   seatsArray,
   setSeatsArray,
   removeRepeatedId,
+  seatsName,
+  setSeatsName,
+  removeRepeatedIdName,
 }) {
   const [seatColor, setSeatColor] = useState(color);
 
@@ -163,6 +191,7 @@ function Seat({
     if (seatColor === "true") {
       setSeatColor("selected");
       setSeatsArray([...seatsArray, id]);
+      setSeatsName([...seatsName, number]);
     } else if (seatColor === "selected") {
       setSeatColor("true");
     } else if (seatColor === "false") {
@@ -175,6 +204,7 @@ function Seat({
       className={seatColor}
       onClick={() => {
         removeRepeatedId(id);
+        removeRepeatedIdName(number);
         changeColor();
       }}
       id={id}
