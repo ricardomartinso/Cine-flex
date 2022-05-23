@@ -18,6 +18,7 @@ const Button = styled.div`
 `;
 const LinkStyled = styled(Link)`
   text-decoration: none;
+  margin-bottom: 25px;
 `;
 const SuccessDiv = styled.div`
   display: flex;
@@ -25,13 +26,13 @@ const SuccessDiv = styled.div`
   justify-content: space-between;
   flex-direction: column;
 
-  width: 94%;
+  width: 98%;
   margin: 25px auto 0 auto;
   font-family: "Roboto", sans-serif;
 `;
 const Pick = styled.h1`
   font-family: "Roboto", sans-serif;
-  text-align: left;
+  text-align: center;
   font-size: 22px;
   font-weight: 700;
   color: ${(props) => (props.cor ? props.cor : "#293845")};
