@@ -1,6 +1,8 @@
 import axios from "axios";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import Header from "./Header";
+
 export default function Movies() {
   const [movie, setMovie] = React.useState([]);
 
@@ -15,12 +17,15 @@ export default function Movies() {
   }, []);
 
   return (
-    <div className="movies ">
-      <h2 className="pick">Selecione o filme</h2>
-      {movie.map((object, index) => (
-        <MovieBox url={object.posterURL} id={object.id} key={index} />
-      ))}
-    </div>
+    <>
+      <Header />
+      <div className="movies ">
+        <h2 className="pick">Selecione o filme</h2>
+        {movie.map((object, index) => (
+          <MovieBox url={object.posterURL} id={object.id} key={index} />
+        ))}
+      </div>
+    </>
   );
 }
 function MovieBox({ url, id }) {

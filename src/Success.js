@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
-
+import Header from "./Header";
 const Button = styled.div`
   display: flex;
   align-items: center;
@@ -52,6 +52,7 @@ export default function Success() {
 
   return (
     <>
+      <Header />
       <SuccessDiv>
         <Pick cor={"green"} marginBottom={"40px"}>
           Pedido feito com sucesso!

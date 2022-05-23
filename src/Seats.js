@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-
+import Header from "./Header.js";
 import {
   SeatsContentStyle,
   SeatsStyle,
@@ -21,7 +21,8 @@ export default function Seats() {
   const [cpf, setCpf] = useState("");
   const [success, setSuccess] = useState({});
   const navigate = useNavigate();
-
+  const location = useLocation();
+  console.log(location);
   useEffect(() => {
     const promise = axios.get(
       `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${params.seatId}/seats`
@@ -94,82 +95,88 @@ export default function Seats() {
       );
     }
   }
+  function Voltar(props) {
+    props(`/movie/${location.state.movieId}`, { replace: true });
+  }
   return (
-    <SeatsContentStyle>
-      <h2 className="pick">Selecione o(s) assento(s)</h2>
-      <SeatsStyle>
-        {seats.map((seat) => (
-          <Seat
-            color={seat.isAvailable.toString()}
-            number={seat.name}
-            key={seat.id}
-            id={seat.id}
-            seatsArray={seatsArray}
-            setSeatsArray={setSeatsArray}
-            seatsName={seatsName}
-            setSeatsName={setSeatsName}
-            removeRepeatedId={removeRepeatedId}
-            removeRepeatedIdName={removeRepeatedIdName}
-          ></Seat>
-        ))}
-        <div className="seats-legends">
-          <div className="legend">
-            <SeatStyle className="selected"></SeatStyle>
-            Selecionado
-          </div>
-          <div className="legend">
-            <SeatStyle className="true"></SeatStyle>
-            Disponível
-          </div>
-          <div className="legend">
-            <SeatStyle className="false"></SeatStyle>
-            Indisponível
-          </div>
-        </div>
-
-        <form onSubmit={buySeat}>
-          <div className="buyer-input">
-            <label htmlFor="name">Nome do comprador:</label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Digite o seu nome..."
-              minLength={3}
-              required
-            />
+    <>
+      <Header voltar={"Voltar"} funcao={() => Voltar(navigate)} />
+      <SeatsContentStyle>
+        <h2 className="pick">Selecione o(s) assento(s)</h2>
+        <SeatsStyle>
+          {seats.map((seat) => (
+            <Seat
+              color={seat.isAvailable.toString()}
+              number={seat.name}
+              key={seat.id}
+              id={seat.id}
+              seatsArray={seatsArray}
+              setSeatsArray={setSeatsArray}
+              seatsName={seatsName}
+              setSeatsName={setSeatsName}
+              removeRepeatedId={removeRepeatedId}
+              removeRepeatedIdName={removeRepeatedIdName}
+            ></Seat>
+          ))}
+          <div className="seats-legends">
+            <div className="legend">
+              <SeatStyle className="selected"></SeatStyle>
+              Selecionado
+            </div>
+            <div className="legend">
+              <SeatStyle className="true"></SeatStyle>
+              Disponível
+            </div>
+            <div className="legend">
+              <SeatStyle className="false"></SeatStyle>
+              Indisponível
+            </div>
           </div>
 
-          <div className="buyer-input">
-            <label htmlFor="cpf">CPF do comprador:</label>
-            <input
-              id="cpf"
-              type="text"
-              value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
-              placeholder="Digite o seu cpf..."
-              minLength={11}
-              required
-            />
-          </div>
+          <form onSubmit={buySeat}>
+            <div className="buyer-input">
+              <label htmlFor="name">Nome do comprador:</label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Digite o seu nome..."
+                minLength={3}
+                required
+              />
+            </div>
 
-          <button>Comprar Assentos</button>
-        </form>
-      </SeatsStyle>
+            <div className="buyer-input">
+              <label htmlFor="cpf">CPF do comprador:</label>
+              <input
+                id="cpf"
+                type="text"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+                placeholder="Digite o seu cpf..."
+                minLength={11}
+                required
+              />
+            </div>
 
-      <footer>
-        <div className="footer-img">
-          <img src={footerMovie.posterURL} alt="" />
-        </div>
-        <div className="session-info">
-          <div className="footer-movie-name">{footerMovie.title}</div>
-          <div className="footer-movie-session">
-            {day.weekday} - {time}
+            <button>Comprar Assentos</button>
+          </form>
+        </SeatsStyle>
+
+        <footer>
+          <div className="footer-img">
+            <img src={footerMovie.posterURL} alt="" />
           </div>
-        </div>
-      </footer>
-    </SeatsContentStyle>
+          <div className="session-info">
+            <div className="footer-movie-name">{footerMovie.title}</div>
+            <div className="footer-movie-session">
+              {day.weekday} - {time}
+            </div>
+          </div>
+        </footer>
+      </SeatsContentStyle>
+    </>
   );
 }
 

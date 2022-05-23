@@ -5,18 +5,13 @@ import Seats from "./Seats";
 import Success from "./Success";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "./GlobalStyle";
+import Header from "./Header";
 export default function App() {
   return (
     <>
       <GlobalStyle />
       <BrowserRouter>
         <div className="container">
-          <a href="/" className="header">
-            <header>
-              <h1>CINEFLEX</h1>
-            </header>
-          </a>
-
           <div className="content">
             <Routes>
               <Route path="/" element={<Movies />} />
