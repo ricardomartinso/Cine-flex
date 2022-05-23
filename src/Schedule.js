@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import imagem from "./assets/img/imagem-teste.png";
 
 export default function Schedule() {
   const [days, setDays] = React.useState([]);

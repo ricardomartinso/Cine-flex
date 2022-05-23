@@ -4,6 +4,7 @@ export const SeatsContentStyle = styled.div`
   width: 100%;
   margin: 0 auto;
   margin-top: 15px;
+  margin-bottom: 145px;
   .selected {
     background-color: #8dd7cf;
   }
